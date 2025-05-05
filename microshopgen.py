@@ -171,6 +171,23 @@ class FeatureSelector:
                 print("Invalid command. Try again.")
 
 
+def generate_microservices(config_file: str, output_dir: str):
+    from generators.inventory import InventoryServiceGenerator
+
+    # todo: repeat with all other generators
+    generators = {
+        "inventory": InventoryServiceGenerator,
+    }
+
+    selector = FeatureSelector(config_file)
+    for feature in (
+        selector.selected_features["core"] + selector.selected_features["optional"]
+    ):
+        if feature in generators:
+            generator = generators[feature]()
+            generator.generate(output_dir)
+
+
 def main():
     parser = argparse.ArgumentParser(
         description="E-commerce Software Product Line Generator"
@@ -181,8 +198,23 @@ def main():
         default="ecommerce_config.json",
         help="Configuration file path",
     )
+    parser.add_argument(
+        "--generate",
+        action="store_true",
+        help="Generate selected microservices",
+    )
+    parser.add_argument(
+        "--output-dir",
+        type=str,
+        default="generated",
+        help="Output directory for the generated microservices",
+    )
 
     args = parser.parse_args()
+
+    if args.generate:
+        generate_microservices(args.config, args.output_dir)
+        return
 
     selector = FeatureSelector(config_file=args.config)
 
