@@ -34,22 +34,27 @@ def inventory():
 @app.route("/inventory/product_ids")
 def get_product_ids():
     #todo: Implement logic to fetch product IDs from the inventory database
+    pass
 
 @app.route("/inventory/stock/<product_id>")
 def get_stock(product_id):
     #todo: Implement logic to fetch stock for a given product ID
+    pass
 
 @app.route("/inventory/stock/<product_id>", methods=["POST"])
 def update_stock(product_id):
     #todo: Implement logic to update stock for a given product ID
+    pass
 
 @app.route("/inventory/register", methods=["POST"])
 @def register_product():
     #todo: Implement logic to register a new product in the inventory
+    pass
 
 @app.route("/inventory/delete/<product_id>", methods=["DELETE"])
 @def delete_product(product_id):
     #todo: Implement logic to delete a product from the inventory
+    pass
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5007)
@@ -75,3 +80,5 @@ COPY . .
 
 CMD ["flask", "run", "--host=0.0.0", "--port=5007"]
 """
+        with open(os.path.join(self.output_dir, "inventory", "Dockerfile"), "w") as f:
+            f.write(dockerfile_content)
